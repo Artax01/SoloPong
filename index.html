@@ -2,7 +2,7 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0" />
     <title>SoloPong</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="./css/style.css">
@@ -19,10 +19,14 @@
             <div id="score" class="top-7 right-7 absolute text-xl font-semibold p-1 px-2 rounded-lg shadow-lg">
                 0s
             </div>
-            <div id="startBtnContainer" class="flex absolute top-65 right-22 bg-gray-800 bg-opacity-90 p-8 rounded-lg shadow-lg">
-                <button id="startBtn" class="px-6 py-3 text-xl font-semibold bg-green-500 hover:bg-green-400 rounded-full shadow-lg transition duration-300 visible">
+            <div id="startBtnContainer" class="flex flex-col absolute top-65 right-22 bg-gray-800 bg-opacity-90 p-8 rounded-lg shadow-lg visible">
+                <button id="startBtn" class="px-6 py-3 text-xl font-semibold bg-green-500 hover:bg-green-400 rounded-full shadow-lg transition duration-300">
                     Démarrer le Jeu
                 </button>
+            </div>
+            <div class="flex bottom-12 left-7 w-79 absolute justify-between sm:hidden">
+                <button id="leftBtn" class="text-lg px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-full transition duration-200">←</button>
+                <button id="rightBtn" class="text-lg px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-full transition duration-200">→</button>
             </div>
         </div>
 
@@ -44,15 +48,10 @@
         </div>
       </div>
 
-      <div class="flex mt-8 space-x-6">
-        <button class="text-lg px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-full transition duration-200">←</button>
-        <button class="text-lg px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-full transition duration-200">→</button>
-      </div>
-
-      <div id="settingsMenu" class="mt-6 bg-gray-800 rounded-lg p-6 space-y-4 text-center">
+      <!-- <div id="settingsMenu" class="mt-6 bg-gray-800 rounded-lg p-6 space-y-4 text-center">
         <p class="text-xl font-semibold">Choisissez une couleur :</p>
         <input type="color" id="colorPicker" value="#FFFFFF" class="w-16 h-16 border-none rounded-full"/>
-      </div>
+      </div> -->
     </div>
 
     <script src="js/script.js"></script>

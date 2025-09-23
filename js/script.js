@@ -3,13 +3,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const canvasObj = document.getElementById('canvas');
     const ctx = canvasObj.getContext("2d");
     const score = document.getElementById('score');
-    const scoreTab = document.getElementById('score_tab');
     const startBtn = document.getElementById('startBtn');
+    const leftBtn = document.getElementById('leftBtn');
+    const rightBtn = document.getElementById('rightBtn');
+
+    // style
+    // const scoreTab = document.getElementById('score_tab');
     const startBtnContainer = document.getElementById('startBtnContainer');
-
-
-    const strechModeBtn = document.getElementById('stretchModeBtn');
-    const colorPicker = document.getElementById('colorPicker');
+    // const strechModeBtn = document.getElementById('stretchModeBtn');
+    // const colorPicker = document.getElementById('colorPicker');
 
     const canvas = {
         HEIGHT: canvasObj.height,
@@ -26,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
         radius: 5,
         velocity: 22,
         stroke: 2,
-        fillStyle: colorPicker.value,
+        // fillStyle: colorPicker.value,
+        fillStyle: "#FFFFFF",
         strokeStyle: "#000"
     }
 
@@ -40,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
         radius: 30,
         velocity: 20,
         angle: Math.PI / 4,
-        fillStyle: colorPicker.value,
+        // fillStyle: colorPicker.value,
+        fillStyle: "#FFFFFF",
     }
 
     const keys = {
@@ -113,6 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
             scoreTab.innerText = `${game.highestScore.toFixed(2)}s`;
         }
 
+        startBtnContainer.innerHTML = "Vous avez perdu !" + startBtnContainer.innerHTML;
         startBtnContainer.classList.remove("hidden");
         startBtnContainer.classList.add("visible");
     }
@@ -170,10 +175,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     draw();
     startBtn.addEventListener('click', startGame);
-    // strechModeBtn.addEventListener('click', () => { 
-    //     canvasObj.style.height = "35vh"; 
-    //     ball.velocity *= 1.5;
-    // });
     document.addEventListener("keydown", e => {
         if (e.key === "ArrowLeft") keys.left = true;
         if (e.key === "ArrowRight") keys.right = true;
@@ -182,9 +183,19 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === "ArrowLeft") keys.left = false;
         if (e.key === "ArrowRight") keys.right = false;
     });
-    colorPicker.addEventListener("input", e => {
-        paddle.fillStyle = e.target.value;
-        ball.fillStyle = e.target.value;
-        draw();
-    });
+    leftBtn.addEventListener("touchstart", () => keys.left = true);
+    leftBtn.addEventListener("touchend", () => keys.left = false);
+    rightBtn.addEventListener("touchstart", () => keys.right = true);
+    rightBtn.addEventListener("touchend", () => keys.right = false);
+
+    // strechModeBtn.addEventListener('click', () => { 
+    //     canvasObj.style.height = "35vh"; 
+    //     ball.velocity *= 1.5;
+    // });
+
+    // colorPicker.addEventListener("input", e => {
+    //     paddle.fillStyle = e.target.value;
+    //     ball.fillStyle = e.target.value;
+    //     draw();
+    // });
 });
