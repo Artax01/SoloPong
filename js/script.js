@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const rightBtn = document.getElementById('rightBtn');
 
     // style
-    // const scoreTab = document.getElementById('score_tab');
     const startBtnContainer = document.getElementById('startBtnContainer');
+    const scoreTab = document.getElementById('score_tab');
     // const strechModeBtn = document.getElementById('stretchModeBtn');
     // const colorPicker = document.getElementById('colorPicker');
 
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (game.score > game.highestScore) {
             game.highestScore = game.score;
-            scoreTab.innerText = `${game.highestScore.toFixed(2)}s`;
+            scoreTab.innerText = `Meilleurs Scores: ${game.highestScore.toFixed(2)}s`;
         }
 
         startBtnContainer.innerHTML = "Vous avez perdu !" + startBtnContainer.innerHTML;
