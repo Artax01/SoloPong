@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const game = {
         playing: false,
         multiplier: 1.05,
+        MAX_MULTIPLIER: 5,
         score: 0,
         highestScore: 0,
         startTime: null,
@@ -82,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.fill();
     }
 
-
     function draw() {
         ctx.clearRect(0, 0, canvas.WIDTH, canvas.HEIGHT);
         drawPaddle(paddle.x, paddle.y, paddle.height, paddle.width, paddle.radius);
@@ -92,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function startGame() {
         if (game.playing) return stopGame();
 
-        // startBtn.innerText = "En cours...";
         game.playing = true;
         game.startTime = Date.now();
 
@@ -117,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
             scoreTab.innerText = `Meilleurs Scores: ${game.highestScore.toFixed(2)}s`;
         }
 
-        startBtnContainer.innerHTML = "Vous avez perdu !" + startBtnContainer.innerHTML;
+        startBtnContainer.querySelector("p").innerText = "Vous avez perdu !";
         startBtnContainer.classList.remove("hidden");
         startBtnContainer.classList.add("visible");
     }
@@ -172,9 +171,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-
     draw();
-    startBtn.addEventListener('click', startGame);
+    startBtn.addEventListener('click', () => {
+        console.log("Game started");
+        startGame();
+    });
     document.addEventListener("keydown", e => {
         if (e.key === "ArrowLeft") keys.left = true;
         if (e.key === "ArrowRight") keys.right = true;

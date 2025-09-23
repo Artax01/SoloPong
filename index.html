@@ -14,13 +14,14 @@
       <p class="text-lg mb-8">Le jeu du pong solo, un défi à relever !</p>
 
 
-      <div id="gameArea" class="relative flex flex-col justify-center z-1">
-        <div id="overlay" class="flex h-full w-full absolute">
+      <div id="gameArea" class="relative flex flex-col justify-center">
+        <div id="overlay" class="flex h-full w-full absolute z-1">
             <div id="score" class="top-7 right-7 absolute text-xl font-semibold p-1 px-2 rounded-lg shadow-lg">
                 0s
             </div>
-            <div id="startBtnContainer" class="flex flex-col absolute top-65 right-22 bg-gray-800 bg-opacity-90 p-8 rounded-lg shadow-lg visible">
-                <button id="startBtn" class="px-6 py-3 text-xl font-semibold bg-green-500 hover:bg-green-400 rounded-full shadow-lg transition duration-300">
+            <div id="startBtnContainer" class="flex flex-col absolute top-65 right-13 sm:right-22 items-center bg-gray-800 bg-opacity-90 p-8 rounded-lg shadow-lg">
+                <p></p>
+                <button id="startBtn" style="cursor: pointer;" class="px-6 py-3 text-xl font-semibold bg-green-500 hover:bg-green-400 rounded-full shadow-lg transition duration-300">
                     Démarrer le Jeu
                 </button>
             </div>
