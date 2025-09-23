@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const score = document.getElementById('score');
     const scoreTab = document.getElementById('score_tab');
     const startBtn = document.getElementById('startBtn');
+    const startBtnContainer = document.getElementById('startBtnContainer');
 
 
     const strechModeBtn = document.getElementById('stretchModeBtn');
@@ -87,9 +88,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function startGame() {
         if (game.playing) return stopGame();
 
-        startBtn.innerText = "En cours...";
+        // startBtn.innerText = "En cours...";
         game.playing = true;
         game.startTime = Date.now();
+
+        startBtnContainer.classList.remove("visible");
+        startBtnContainer.classList.add("hidden");
 
         cancelAnimationFrame(game.animationFrame);
         gameLoop();
@@ -108,6 +112,9 @@ document.addEventListener('DOMContentLoaded', function() {
             game.highestScore = game.score;
             scoreTab.innerText = `${game.highestScore.toFixed(2)}s`;
         }
+
+        startBtnContainer.classList.remove("hidden");
+        startBtnContainer.classList.add("visible");
     }
 
     function updateGame() {
@@ -151,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function gameLoop() {
         if (game.playing) {
             game.score = (Date.now() - game.startTime) / 1000;
-            score.innerText = `Score: ${(game.score).toFixed(2)}s`;
+            score.innerText = `${(game.score).toFixed(2)}s`;
             updateGame();
             draw();
             game.animationFrame = requestAnimationFrame(gameLoop);
