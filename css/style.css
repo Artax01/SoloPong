@@ -5,6 +5,12 @@
     font-family: 'Poppins', sans-serif;
 }
 
+:root {
+    --canvas-border-color: #000;
+    --canvas-border-thickness: 1px;
+    --canvas-border-radius: 8px;
+}
+
 body {
     display: flex;
     padding: 2rem;
@@ -12,4 +18,21 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#gameArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+canvas {
+    border: var(--canvas-border-thickness) solid var(--canvas-border-color);
+    border-radius: var(--canvas-border-radius);
+}
+
+#startBtn {
+    padding: 1rem;
 }
