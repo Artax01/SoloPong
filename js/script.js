@@ -1,9 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
    
-    // elements
     const canvasObj = document.getElementById('canvas');
     const ctx = canvasObj.getContext("2d");
+    const score = document.getElementById('score');
+    const scoreTab = document.getElementById('score_tab');
     const startBtn = document.getElementById('startBtn');
+
+
+    const strechModeBtn = document.getElementById('stretchModeBtn');
+    const colorPicker = document.getElementById('colorPicker');
 
     const canvas = {
         HEIGHT: canvasObj.height,
@@ -11,22 +16,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const paddle = {
-        x: canvas.WIDTH / 2 - 85 / 2,
-        y: canvas.HEIGHT - 20,
-        height: 10,
-        width: 85,
+        startX: canvas.WIDTH / 2 - (250 / 2),
+        startY: canvas.HEIGHT - 75,
+        x: canvas.WIDTH / 2 - (250 / 2),
+        y: canvas.HEIGHT - 75,
+        height: 25,
+        width: 250,
         radius: 5,
-        velocity: 7
+        velocity: 22,
+        stroke: 2,
+        fillStyle: colorPicker.value,
+        strokeStyle: "#000"
     }
 
     const ball = {
+        startX: canvas.WIDTH / 2,
+        startY: canvas.HEIGHT - 4.25 * paddle.height,
         x: canvas.WIDTH / 2,
-        y: canvas.HEIGHT - 20 - paddle.height,
+        y: canvas.HEIGHT - 4.25 * paddle.height,
         height: 10,
         width: 10,
-        radius: 5,
-        velocity: 5,
-        multiplier: 1
+        radius: 30,
+        velocity: 20,
+        angle: Math.PI / 4,
+        fillStyle: colorPicker.value,
     }
 
     const keys = {
@@ -36,41 +49,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const game = {
         playing: false,
+        multiplier: 1.05,
         score: 0,
         highestScore: 0,
         startTime: null,
         animationFrame: null
     }
 
-
     function drawPaddle(xPos, yPos, height, width, radius) {
         ctx.beginPath();
-        ctx.moveTo(xPos + radius, yPos);
-        ctx.lineTo(xPos + width - radius, yPos);
-        ctx.quadraticCurveTo(xPos + width, yPos, xPos + width, yPos + radius);
-        ctx.lineTo(xPos + width, yPos + height - radius);
-        ctx.quadraticCurveTo(xPos + width, yPos + height, xPos + width - radius, yPos + height);
-        ctx.lineTo(xPos + radius, yPos + height);
-        ctx.quadraticCurveTo(xPos, yPos + height, xPos, yPos + height - radius);
-        ctx.lineTo(xPos, yPos + radius);
-        ctx.quadraticCurveTo(xPos, yPos, xPos + radius, yPos);
-        ctx.closePath();
-
-        // Remplissage en blanc
-        ctx.fillStyle = "#FFF";
+        ctx.rect(xPos, yPos, width, height);
+        ctx.fillStyle = paddle.fillStyle;
         ctx.fill();
-
-        // Bordure en noir
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "#000";
+        ctx.lineWidth = paddle.stroke;
+        ctx.strokeStyle = paddle.strokeStyle;
         ctx.stroke();
+        ctx.closePath();
     }
 
-    function drawBall(xPos, yPos, height, width, radius) {
+    function drawBall(xPos, yPos, radius) {
         ctx.beginPath();
         ctx.arc(xPos, yPos, radius + 1, 0, Math.PI * 2);
         ctx.fill();
-        ctx.fillStyle = "#000";
+        ctx.fillStyle = ball.fillStyle;
         ctx.beginPath();
         ctx.arc(xPos, yPos, radius - 2, 0, Math.PI * 2);
         ctx.fill();
@@ -80,10 +81,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function draw() {
         ctx.clearRect(0, 0, canvas.WIDTH, canvas.HEIGHT);
         drawPaddle(paddle.x, paddle.y, paddle.height, paddle.width, paddle.radius);
-        drawBall(ball.x, ball.y, ball.height, ball.width, ball.radius);
+        drawBall(ball.x, ball.y, ball.radius);
     }
     
-    // functions
     function startGame() {
         if (game.playing) return stopGame();
 
@@ -92,14 +92,22 @@ document.addEventListener('DOMContentLoaded', function() {
         game.startTime = Date.now();
 
         cancelAnimationFrame(game.animationFrame);
-        loop();
+        gameLoop();
     }
 
     function stopGame() {
         startBtn.innerText = "Recommencer";
         game.playing = false;
-        paddle.x = canvas.WIDTH / 2 - paddle.width / 2;
+        paddle.x = paddle.startX;
+        paddle.y = paddle.startY;
+        ball.x = ball.startX;
+        ball.y = ball.startY;
         draw();
+
+        if (game.score > game.highestScore) {
+            game.highestScore = game.score;
+            scoreTab.innerText = `${game.highestScore.toFixed(2)}s`;
+        }
     }
 
     function updateGame() {
@@ -110,26 +118,55 @@ document.addEventListener('DOMContentLoaded', function() {
             paddle.x += paddle.velocity;
         }
 
-        if (ball.y > paddle.y) {
+        ball.x -= Math.cos(ball.angle) * ball.velocity;
+        ball.y -= Math.sin(ball.angle) * ball.velocity;
+
+        if (ball.x <= 0 || ball.x + ball.width >= canvas.WIDTH) {
+            ball.angle = Math.PI - ball.angle;
+        }
+
+        if (ball.y < 0) {
+            ball.angle = -ball.angle;
+        }
+
+        if (ball.y >= paddle.y) {
             return stopGame();
         }
+
+        if (ball.y + ball.height >= paddle.y && ball.x + ball.width >= paddle.x && ball.x <= paddle.x + paddle.width) {
+            let newAngle = Math.PI - (Math.PI / 4) * ((ball.x + ball.width / 2) - (paddle.x + paddle.width / 2)) / (paddle.width / 2);
+
+            let speedY = Math.sin(newAngle) * ball.velocity;
+
+            if (Math.abs(speedY) < 5) {
+                newAngle = Math.PI / 4;
+            }
+
+            ball.angle = newAngle;
+            ball.velocity *= game.multiplier;
+            paddle.velocity *= game.multiplier;
+        }
     }
 
-    function loop() {
+    function gameLoop() {
         if (game.playing) {
+            game.score = (Date.now() - game.startTime) / 1000;
+            score.innerText = `Score: ${(game.score).toFixed(2)}s`;
             updateGame();
             draw();
-            game.animationFrame = requestAnimationFrame(loop);
+            game.animationFrame = requestAnimationFrame(gameLoop);
         } else {
-            // dessiner l'état final si perdu
             draw();
         }
     }
 
 
-    // listeners
     draw();
     startBtn.addEventListener('click', startGame);
+    // strechModeBtn.addEventListener('click', () => { 
+    //     canvasObj.style.height = "35vh"; 
+    //     ball.velocity *= 1.5;
+    // });
     document.addEventListener("keydown", e => {
         if (e.key === "ArrowLeft") keys.left = true;
         if (e.key === "ArrowRight") keys.right = true;
@@ -137,5 +174,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener("keyup", e => {
         if (e.key === "ArrowLeft") keys.left = false;
         if (e.key === "ArrowRight") keys.right = false;
+    });
+    colorPicker.addEventListener("input", e => {
+        paddle.fillStyle = e.target.value;
+        ball.fillStyle = e.target.value;
+        draw();
     });
 });

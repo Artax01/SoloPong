@@ -13,12 +13,19 @@
 
 body {
     display: flex;
-    padding: 2rem;
+    /* height: 100vh; */
+    /* padding: 2rem; */
     width: 100vw;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+/* button {
+    background: linear-gradient(rgb(247, 247, 248) 0%, rgb(234, 234, 235) 100%);
+    box-shadow: rgb(255, 255, 255) 0px 2px 0px 0px inset;
+    border-radius: 12px;
+    border: 1px solid #e1e2e3;
+} */
 
 #gameArea {
     display: flex;
@@ -31,6 +38,8 @@ body {
 canvas {
     border: var(--canvas-border-thickness) solid var(--canvas-border-color);
     border-radius: var(--canvas-border-radius);
+    width: calc(75vh * 16/24) !important;
+    height: 75vh !important;
 }
 
 #startBtn {
