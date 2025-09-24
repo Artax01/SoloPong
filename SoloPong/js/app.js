@@ -7,11 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const leftBtn = document.getElementById('leftBtn');
     const rightBtn = document.getElementById('rightBtn');
 
-    // style
+    // container
     const startBtnContainer = document.getElementById('startBtnContainer');
     const scoreTab = document.getElementById('score_tab');
-    // const strechModeBtn = document.getElementById('stretchModeBtn');
-    // const colorPicker = document.getElementById('colorPicker');
 
     const canvas = {
         HEIGHT: canvasObj.height,
@@ -28,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
         radius: 5,
         velocity: 22,
         stroke: 2,
-        // fillStyle: colorPicker.value,
         fillStyle: "#FFFFFF",
         strokeStyle: "#000"
     }
@@ -43,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
         radius: 30,
         velocity: 20,
         angle: Math.PI / 4,
-        // fillStyle: colorPicker.value,
         fillStyle: "#FFFFFF",
     }
 
@@ -54,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const game = {
         playing: false,
-        multiplier: 1.05,
+        multiplier: 1.1,
         MAX_MULTIPLIER: 5,
         score: 0,
         highestScore: 0,
@@ -140,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ball.angle = -ball.angle;
         }
 
-        if (ball.y >= paddle.y) {
+        if (ball.y >= canvas.HEIGHT) {
             return stopGame();
         }
 
@@ -188,15 +184,4 @@ document.addEventListener('DOMContentLoaded', function() {
     leftBtn.addEventListener("touchend", () => keys.left = false);
     rightBtn.addEventListener("touchstart", () => keys.right = true);
     rightBtn.addEventListener("touchend", () => keys.right = false);
-
-    // strechModeBtn.addEventListener('click', () => { 
-    //     canvasObj.style.height = "35vh"; 
-    //     ball.velocity *= 1.5;
-    // });
-
-    // colorPicker.addEventListener("input", e => {
-    //     paddle.fillStyle = e.target.value;
-    //     ball.fillStyle = e.target.value;
-    //     draw();
-    // });
 });

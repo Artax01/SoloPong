@@ -32,7 +32,7 @@ canvas {
     border: var(--canvas-border-thickness) solid var(--canvas-border-color);
     border-radius: var(--canvas-border-radius);
     width: calc(75vh * 16/24) !important;
-    height: 75vh !important;
+    height: 75vh;
 }
 
 #score {
