@@ -1,58 +1,48 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0" />
-    <title>SoloPong</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="./css/style.css">
-  </head>
-  <body class="flex w-screen flex-col bg-gray-900 text-white font-sans">
-    <div class="flex flex-col items-center py-6">
+	<head>
+    	<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0">
+		<title>SoloPong</title>
+		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+		<link rel="stylesheet" href="./css/style.css">
+	</head>
+	<body class="flex w-screen flex-col bg-gray-900 text-white font-sans">
+		<div class="flex flex-col items-center py-6">
+			<h1 class="text-4xl font-extrabold text-center text-yellow-500 mb-4">SoloPong</h1>
+			<p class="text-lg mb-8">Le jeu du pong solo, un défi à relever !</p>
 
-        <h1 class="text-4xl font-extrabold text-center text-yellow-500 mb-4">SoloPong</h1>
-        <p class="text-lg mb-8">Le jeu du pong solo, un défi à relever !</p>
+			<div id="gameArea" class="relative flex flex-col justify-center">
+				<div id="overlay" class="flex h-full w-full absolute z-1">
+					<div id="score" class="top-7 right-7 absolute text-xl font-semibold p-1 px-2 rounded-lg shadow-lg">
+						0s
+					</div>
+					<div id="startBtnContainer" class="flex flex-col absolute top-65 right-13 sm:right-22 items-center bg-gray-800 bg-opacity-90 p-8 rounded-lg shadow-lg">
+						<p></p>
+						<button id="startBtn" style="cursor: pointer;" class="px-6 py-3 text-xl font-semibold bg-green-500 hover:bg-green-400 rounded-full shadow-lg transition duration-300">
+							Démarrer le Jeu
+						</button>
+					</div>
+					<div class="flex bottom-12 left-7 w-79 absolute justify-between sm:hidden">
+						<button id="leftBtn" class="text-lg px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-full transition duration-200">←</button>
+						<button id="rightBtn" class="text-lg px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-full transition duration-200">→</button>
+					</div>
+				</div>
 
-        <div id="gameArea" class="relative flex flex-col justify-center">
-            <div id="overlay" class="flex h-full w-full absolute z-1">
-                <div id="score" class="top-7 right-7 absolute text-xl font-semibold p-1 px-2 rounded-lg shadow-lg">
-                    0s
-                </div>
-                <div id="startBtnContainer" class="flex flex-col absolute top-65 right-13 sm:right-22 items-center bg-gray-800 bg-opacity-90 p-8 rounded-lg shadow-lg">
-                    <p></p>
-                    <button id="startBtn" style="cursor: pointer;" class="px-6 py-3 text-xl font-semibold bg-green-500 hover:bg-green-400 rounded-full shadow-lg transition duration-300">
-                        Démarrer le Jeu
-                    </button>
-                </div>
-                <div class="flex bottom-12 left-7 w-79 absolute justify-between sm:hidden">
-                    <button id="leftBtn" class="text-lg px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-full transition duration-200">←</button>
-                    <button id="rightBtn" class="text-lg px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-full transition duration-200">→</button>
-                </div>
-            </div>
+				<canvas id="canvas" width="1600" height="2400" class="border-4 border-gray-800 shadow-lg"></canvas>
+			</div>
 
-            <canvas id="canvas" width="1600" height="2400" class="border-4 border-gray-800 shadow-lg"></canvas>
-        </div>
+			<div class="text-lg">
+				<p id="score_tab" class="font-semibold">Meilleur Score: 0s</p>
+			</div>
+    	</div>
 
-        <!-- <div>
-          <button id="stretchModeBtn" class="px-6 py-3 text-xl font-semibold bg-blue-500 hover:bg-blue-400 rounded-full shadow-lg transition duration-300">
-            Mode Etiré
-          </button>
-        </div> -->
+		<!-- <div id="settingsMenu" class="mt-6 bg-gray-800 rounded-lg p-6 space-y-4 text-center">
+			<p class="text-xl font-semibold">Choisissez une couleur :</p>
+			<input type="color" id="colorPicker" value="#FFFFFF" class="w-16 h-16 border-none rounded-full"/>
+		</div> -->
 
-        <div class="text-lg">
-            <p id="score_tab" class="font-semibold">Meilleurs Scores: 0s</p>
-            <!-- <p  class="text-sm italic">Aucun score pour l'instant.</p> -->
-            </div>
-        </div>
-    </div>
-
-      <!-- <div id="settingsMenu" class="mt-6 bg-gray-800 rounded-lg p-6 space-y-4 text-center">
-        <p class="text-xl font-semibold">Choisissez une couleur :</p>
-        <input type="color" id="colorPicker" value="#FFFFFF" class="w-16 h-16 border-none rounded-full"/>
-      </div> -->
-
-
-    <script src="js/app.js"></script>
-    <script src="js/options.js"></script>
-  </body>
+		<script src="js/app.js"></script>
+		<script src="js/options.js"></script>
+	</body>
 </html>

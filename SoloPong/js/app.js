@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         height: 25,
         width: 250,
         radius: 5,
+        startVelocity: 22,
         velocity: 22,
         stroke: 2,
         fillStyle: "#FFFFFF",
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
         height: 10,
         width: 10,
         radius: 30,
+        startVelocity: 20,
         velocity: 20,
         angle: Math.PI / 4,
         fillStyle: "#FFFFFF",
@@ -98,18 +100,28 @@ document.addEventListener('DOMContentLoaded', function() {
         gameLoop();
     }
 
+    function resetPaddle() {
+        paddle.x = paddle.startX;
+        paddle.y = paddle.startY;
+        paddle.velocity = paddle.startVelocity;
+    }
+
+    function resetBall() {
+        ball.x = ball.startX;
+        ball.y = ball.startY;
+        ball.velocity = ball.startVelocity;
+    }
+
     function stopGame() {
         startBtn.innerText = "Recommencer";
         game.playing = false;
-        paddle.x = paddle.startX;
-        paddle.y = paddle.startY;
-        ball.x = ball.startX;
-        ball.y = ball.startY;
+        resetPaddle();
+        resetBall();
         draw();
 
         if (game.score > game.highestScore) {
             game.highestScore = game.score;
-            scoreTab.innerText = `Meilleurs Scores: ${game.highestScore.toFixed(2)}s`;
+            scoreTab.innerText = `Meilleur Score: ${game.highestScore.toFixed(2)}s`;
         }
 
         startBtnContainer.querySelector("p").innerText = "Vous avez perdu !";

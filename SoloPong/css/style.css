@@ -1,6 +1,5 @@
 * {
     margin: 0;
-    /* padding: 0; */
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
@@ -9,12 +8,14 @@
     --canvas-border-color: #000;
     --canvas-border-thickness: 1px;
     --canvas-border-radius: 8px;
+    --score-background-color: rgba(6, 62, 247, 0.25);
 }
 
 body {
     justify-content: center;
     align-items: center;
 }
+
 /* button {
     background: linear-gradient(rgb(247, 247, 248) 0%, rgb(234, 234, 235) 100%);
     box-shadow: rgb(255, 255, 255) 0px 2px 0px 0px inset;
@@ -36,7 +37,7 @@ canvas {
 }
 
 #score {
-    background-color: rgba(6, 62, 247, 0.25);
+    background-color: var(--score-background-color);
 }
 
 .hidden {
